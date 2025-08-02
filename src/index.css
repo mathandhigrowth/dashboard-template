@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+
+tr {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.bg-DarkPrimary {
+  background-color: #efefef;
+}
+
+.scrollbar {
+  scrollbar-width: thin;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
