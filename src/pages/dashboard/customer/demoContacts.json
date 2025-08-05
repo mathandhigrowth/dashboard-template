@@ -1,0 +1,105 @@
+{
+  "contacts": [
+    {
+      "_id": "1",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "phone": "+1 (555) 123-4567",
+      "subject": "Inquiry about services",
+      "message": "Hello, I would like to inquire about your services. Could you please provide more information?",
+      "status": "new",
+      "createdAt": "2025-08-01T10:30:00Z"
+    },
+    {
+      "_id": "2",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "phone": "+1 (555) 987-6543",
+      "subject": "Partnership opportunity",
+      "message": "We are interested in partnering with your company. Let's discuss potential collaboration.",
+      "status": "in_progress",
+      "createdAt": "2025-08-02T14:15:00Z"
+    },
+    {
+      "_id": "3",
+      "name": "Robert Johnson",
+      "email": "robert.j@example.com",
+      "phone": "+1 (555) 456-7890",
+      "subject": "Product support",
+      "message": "I'm having trouble with your product. Can you please assist me with this issue?",
+      "status": "resolved",
+      "createdAt": "2025-07-30T09:20:00Z"
+    },
+    {
+      "_id": "4",
+      "name": "Emily Davis",
+      "email": "emily.d@example.com",
+      "phone": "+1 (555) 234-5678",
+      "subject": "Feedback",
+      "message": "I wanted to share some feedback about your service. Overall, I'm very satisfied!",
+      "status": "new",
+      "createdAt": "2025-08-03T16:45:00Z"
+    },
+    {
+      "_id": "5",
+      "name": "Michael Wilson",
+      "email": "michael.w@example.com",
+      "phone": "+1 (555) 876-5432",
+      "subject": "Bulk order request",
+      "message": "I would like to place a bulk order. Could you provide me with a quote?",
+      "status": "in_progress",
+      "createdAt": "2025-08-04T11:20:00Z"
+    },
+    {
+      "_id": "6",
+      "name": "Sarah Brown",
+      "email": "sarah.b@example.com",
+      "phone": "+1 (555) 345-6789",
+      "subject": "Career opportunity",
+      "message": "I'm interested in career opportunities at your company. Are you currently hiring?",
+      "status": "new",
+      "createdAt": "2025-08-05T09:10:00Z"
+    },
+    {
+      "_id": "7",
+      "name": "David Miller",
+      "email": "david.m@example.com",
+      "phone": "+1 (555) 765-4321",
+      "subject": "Feature request",
+      "message": "I have a suggestion for a new feature that would be valuable for your product.",
+      "status": "new",
+      "createdAt": "2025-08-05T10:30:00Z"
+    },
+    {
+      "_id": "8",
+      "name": "Lisa Anderson",
+      "email": "lisa.a@example.com",
+      "phone": "+1 (555) 654-3210",
+      "subject": "Account issue",
+      "message": "I'm unable to access my account. Can you help me reset my password?",
+      "status": "in_progress",
+      "createdAt": "2025-08-03T13:25:00Z"
+    },
+    {
+      "_id": "9",
+      "name": "James Wilson",
+      "email": "james.w@example.com",
+      "phone": "+1 (555) 987-1234",
+      "subject": "Pricing information",
+      "message": "Could you please send me detailed pricing information for your enterprise plan?",
+      "status": "new",
+      "createdAt": "2025-08-04T15:40:00Z"
+    },
+    {
+      "_id": "10",
+      "name": "Jennifer Lee",
+      "email": "jennifer.l@example.com",
+      "phone": "+1 (555) 321-0987",
+      "subject": "Cancellation request",
+      "message": "I would like to cancel my subscription. Could you assist me with this?",
+      "status": "resolved",
+      "createdAt": "2025-07-29T17:15:00Z"
+    }
+  ],
+  "total": 10
+}

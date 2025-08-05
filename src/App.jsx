@@ -1,9 +1,13 @@
-import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { Suspense, createContext, useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import routes from './routes.jsx';
 import './App.css';
 import ProtectedRoute from './routes/ProtectedRoute';
 import { Toaster } from 'react-hot-toast';
+import axios from 'axios';
+export const PassingValue = createContext()
+
+
 
 const Loader = () => (
   <div className='flex justify-center items-center h-screen'>
@@ -12,8 +16,27 @@ const Loader = () => (
 );
 
 function App() {
+  const [value, setValue ] = useState([])
+  const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    const fetchBookings = async () => {
+      setLoading(true)
+      try {
+        const response = await axios.get('http://localhost:8080/api/bookings');
+        setValue(response.data);
+        console.log("response.data", response.data)
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+      } finally {
+        setLoading(false)
+      }
+    };
+    fetchBookings();
+  }, [])
   return (
-    <Router>
+    
+    <BrowserRouter>
+    <PassingValue.Provider value={{value, loading, setValue, setLoading }}>
       <Suspense fallback={<Loader />}>
         <Toaster />
         <Routes>
@@ -33,7 +56,9 @@ function App() {
         </Routes>
         <Toaster />
       </Suspense>
-    </Router>
+      </PassingValue.Provider>
+    </BrowserRouter>
+   
   );
 }
 

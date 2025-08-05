@@ -1,0 +1,76 @@
+{
+  "bookings": [
+    {
+      "_id": "64f8e3b3c9e86b001f712345",
+      "fullName": "John Doe",
+      "email": "john.doe@example.com",
+      "phone": "+1 (555) 123-4567",
+      "program": "Full Stack Development Bootcamp",
+      "age": 28,
+      "status": "Confirmed",
+      "preferredDate": "2025-09-15T09:00:00.000Z",
+      "createdAt": "2025-08-01T14:30:00.000Z",
+      "notes": "Interested in full-time program"
+    },
+    {
+      "_id": "64f8e3b3c9e86b001f712346",
+      "fullName": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "phone": "+1 (555) 987-6543",
+      "program": "Data Science Fundamentals",
+      "age": 32,
+      "status": "Pending",
+      "preferredDate": "2025-09-20T13:30:00.000Z",
+      "createdAt": "2025-08-02T10:15:00.000Z",
+      "notes": "Requested weekend schedule"
+    },
+    {
+      "_id": "64f8e3b3c9e86b001f712347",
+      "fullName": "Alex Johnson",
+      "email": "alex.j@example.com",
+      "phone": "+1 (555) 456-7890",
+      "program": "UX/UI Design Masterclass",
+      "age": 25,
+      "status": "Completed",
+      "preferredDate": "2025-08-10T11:00:00.000Z",
+      "createdAt": "2025-07-28T16:45:00.000Z",
+      "notes": "Excellent student, highly engaged"
+    },
+    {
+      "_id": "64f8e3b3c9e86b001f712348",
+      "fullName": "Michael Brown",
+      "email": "michael.b@example.com",
+      "phone": "+1 (555) 234-5678",
+      "program": "Cybersecurity Essentials",
+      "age": 35,
+      "status": "Cancelled",
+      "preferredDate": "2025-09-05T15:30:00.000Z",
+      "createdAt": "2025-07-30T09:20:00.000Z",
+      "notes": "Cancelled due to schedule conflict"
+    },
+    {
+      "_id": "64f8e3b3c9e86b001f712349",
+      "fullName": "Sarah Wilson",
+      "email": "sarah.w@example.com",
+      "phone": "+1 (555) 678-9012",
+      "program": "Digital Marketing Strategy",
+      "age": 29,
+      "status": "Confirmed",
+      "preferredDate": "2025-09-12T10:00:00.000Z",
+      "createdAt": "2025-08-03T11:10:00.000Z",
+      "notes": "Referred by a friend"
+    },
+    {
+      "_id": "64f8e3b3c9e86b001f712350",
+      "fullName": "Sarah Wilson",
+      "email": "sarah.w@example.com",
+      "phone": "+1 (555) 678-9012",
+      "program": "Digital Marketing Strategy",
+      "age": 29,
+      "status": "Confirmed",
+      "preferredDate": "2025-09-12T10:00:00.000Z",
+      "createdAt": "2025-08-03T11:10:00.000Z",
+      "notes": "Referred by a friend"
+    }
+  ]
+}

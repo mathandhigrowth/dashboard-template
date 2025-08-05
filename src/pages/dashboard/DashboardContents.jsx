@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { Loader2, AlertCircle, Home, Key, IndianRupee, UserPlus, ChefHat } from "lucide-react";
-import { Users, FolderOpen, ShoppingCart, Plus, Settings, FileText } from "lucide-react";
+import { Loader2, AlertCircle, Home,Phone } from "lucide-react";
 
 const Card = React.forwardRef(({ className, ...props }, ref) => <div ref={ref} className={`rounded-lg border bg-white text-card-foreground shadow-sm ${className || ""}`} {...props} />);
 Card.displayName = "Card";
@@ -46,78 +45,57 @@ const DashboardContents = ({ onMenuChange }) => {
 
   const dashboardItems = [
     {
-      title: "Total Customers",
+      title: "Total Bookings",
       value: 2,
-      icon: Users,
+      icon: Home,
       loading: false,
       error: null,
-      menuKey: "customers",
+      menuKey: "bookings",
       iconColor: "bg-blue-500",
       growth: "+12%",
     },
     {
-      title: "Rooms Occupied",
+      title: "Total contacts",
       value: 22,
-      icon: Home,
+      icon: Phone,
       loading: false,
       error: null,
-      menuKey: "rooms",
+      menuKey: "contacts",
       iconColor: "bg-green-500",
       growth: "+5%",
-    },
-    {
-      title: "Vacant Rooms",
-      value: 12,
-      icon: Key,
-      loading: false,
-      error: null,
-      menuKey: "vacantRooms",
-      iconColor: "bg-red-500",
-      growth: "-3%",
-    },
-    {
-      title: "Payments Received",
-      value: 2.6,
-      icon: IndianRupee,
-      loading: false,
-      error: null,
-      menuKey: "payments",
-      iconColor: "bg-slate-600",
-      growth: "+8%",
-      isCurrency: true,
-    },
+    }
   ];
 
-  const quickActions = [
-    {
-      title: "Add Customer",
-      description: "Onboard new customers and manage their details efficiently",
-      icon: UserPlus,
-      iconColor: "bg-blue-500",
-      action: () => onMenuChange("customers"),
-    },
-    {
-      title: "Add Room",
-      description: "Create new room entries and manage room allocations",
-      icon: Plus,
-      iconColor: "bg-green-500",
-      action: () => onMenuChange("rooms"),
-    },
-    {
-      title: "Menu Planning",
-      description: "Update and manage daily food menu for residents",
-      icon: ChefHat,
-      iconColor: "bg-slate-600",
-      action: () => onMenuChange("menu"),
-    },
-    {
-      title: "Payment Records",
-      description: "View and manage all payment transactions and history",
-      icon: FileText,
-      iconColor: "bg-red-500",
-      action: () => onMenuChange("payments"),
-    },
-  ];
+  // const quickActions = [
+  //   {
+  //     title: "Add Customer",
+  //     description: "Onboard new customers and manage their details efficiently",
+  //     icon: UserPlus,
+  //     iconColor: "bg-blue-500",
+  //     action: () => onMenuChange("customers"),
+  //   },
+  //   {
+  //     title: "Add Room",
+  //     description: "Create new room entries and manage room allocations",
+  //     icon: Plus,
+  //     iconColor: "bg-green-500",
+  //     action: () => onMenuChange("rooms"),
+  //   },
+  //   {
+  //     title: "Menu Planning",
+  //     description: "Update and manage daily food menu for residents",
+  //     icon: ChefHat,
+  //     iconColor: "bg-slate-600",
+  //     action: () => onMenuChange("menu"),
+  //   },
+  //   {
+  //     title: "Payment Records",
+  //     description: "View and manage all payment transactions and history",
+  //     icon: FileText,
+  //     iconColor: "bg-red-500",
+  //     action: () => onMenuChange("payments"),
+  //   },
+  // ];
 
   if (anyError) {
     return (
@@ -187,29 +165,12 @@ const DashboardContents = ({ onMenuChange }) => {
               );
             })}
           </div>
-          <div className="space-y-6">
+          {/* <div className="space-y-6">
             <h2 className="text-xl font-semibold text-gray-900">Quick Actions</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {quickActions.map((action) => {
-                const IconComponent = action.icon;
-                return (
-                  <Card key={action.title} className="cursor-pointer hover:shadow-lg transition-shadow duration-200 border border-gray-200 shadow-sm" onClick={action.action}>
-                    <CardContent className="p-6">
-                      <div className="space-y-4">
-                        <div className={`p-3 rounded-xl ${action.iconColor} w-fit`}>
-                          <IconComponent className="h-6 w-6 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-lg text-gray-900 mb-2">{action.title}</h3>
-                          <p className="text-sm text-gray-600 leading-relaxed">{action.description}</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
+            
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

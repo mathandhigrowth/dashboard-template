@@ -9,7 +9,7 @@ const { SubMenu } = Menu;
 
 import { BarChart3, Users, AlertTriangle, Building, Utensils, User, CreditCard, Settings, BuildingIcon } from "lucide-react";
 import { FiSettings } from "react-icons/fi";
-
+import { Calendar } from "lucide-react";
 const MENU_ITEMS = [
   {
     key: "dashboard",
@@ -18,55 +18,18 @@ const MENU_ITEMS = [
     type: "item",
   },
   {
-    key: "customers",
+    key: "bookings",
+    icon: <Calendar size={18} />,
+    label: "Booking Management",
+    type: "item",
+  },
+  {
+    key: "Contact",
     icon: <Users size={18} />,
-    label: "Customer Management",
+    label: "Contact Messages",
     type: "item",
   },
-  {
-    key: "alerts",
-    icon: <AlertTriangle size={18} />,
-    label: "Recent Alerts",
-    type: "item",
-    // Optional: add badge dynamically if `notifications` is a variable
-    // badge: notifications,
-  },
-  {
-    key: "rooms",
-    icon: <Building size={18} />,
-    label: "Rooms Management",
-    type: "item",
-  },
-  {
-    key: "foods",
-    icon: <Utensils size={18} />,
-    label: "Food Management",
-    type: "item",
-  },
-  {
-    key: "payments",
-    icon: <CreditCard size={18} />,
-    label: "Payments",
-    type: "item",
-  },
-  {
-    key: "settings",
-    icon: <FiSettings size={18} />,
-    label: "Settings",
-    type: "group",
-    children: [
-      {
-        key: "general",
-        icon: <FiSettings size={18} />,
-        label: "General Settings",
-      },
-      {
-        key: "email",
-        icon: <MdAlternateEmail size={18} />,
-        label: "Email Templates",
-      },
-    ],
-  },
+  
 ];
 
 const DEFAULT_SIDEBAR_WIDTH = 250;
