@@ -1,101 +1,91 @@
 import React, { useEffect } from "react";
-import { Loader2, AlertCircle, Home,Phone } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { Loader2, AlertCircle, Home, Phone } from "lucide-react";
 
-const Card = React.forwardRef(({ className, ...props }, ref) => <div ref={ref} className={`rounded-lg border bg-white text-card-foreground shadow-sm ${className || ""}`} {...props} />);
+import {
+  fetchBookings,
+  selectAllBookings,
+  selectBookingsStatus,
+} from "../../redux/booking/bookingSlice";
+
+import {
+  fetchContacts,
+  selectContacts,
+  selectContactsStatus,
+} from "../../redux/contact/contactSlice";
+
+const Card = React.forwardRef(({ className, ...props }, ref) => (
+  <div ref={ref} className={`rounded-lg border bg-white text-card-foreground shadow-sm ${className || ""}`} {...props} />
+));
 Card.displayName = "Card";
 
-const CardContent = React.forwardRef(({ className, ...props }, ref) => <div ref={ref} className={`p-6 ${className || ""}`} {...props} />);
+const CardContent = React.forwardRef(({ className, ...props }, ref) => (
+  <div ref={ref} className={`p-6 ${className || ""}`} {...props} />
+));
 CardContent.displayName = "CardContent";
-
-const Badge = ({ variant = "default", className, children, ...props }) => {
-  const variants = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/80",
-    destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/80",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-  };
-
-  return (
-    <div
-      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${
-        variants[variant]
-      } ${className || ""}`}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-};
 
 const Alert = React.forwardRef(({ className, variant, ...props }, ref) => (
   <div
     ref={ref}
     role="alert"
-    className={`relative w-full rounded-lg border p-4 ${variant === "destructive" ? "border-destructive/50 text-destructive dark:border-destructive" : "border-border"} ${className || ""}`}
+    className={`relative w-full rounded-lg border p-4 ${
+      variant === "destructive" ? "border-destructive/50 text-destructive" : "border-border"
+    } ${className || ""}`}
     {...props}
   />
 ));
 Alert.displayName = "Alert";
 
-const AlertDescription = React.forwardRef(({ className, ...props }, ref) => <div ref={ref} className={`text-sm [&_p]:leading-relaxed ${className || ""}`} {...props} />);
+const AlertDescription = React.forwardRef(({ className, ...props }, ref) => (
+  <div ref={ref} className={`text-sm [&_p]:leading-relaxed ${className || ""}`} {...props} />
+));
 AlertDescription.displayName = "AlertDescription";
 
 const DashboardContents = ({ onMenuChange }) => {
-  const isLoading = false;
-  const anyError = null;
+  const dispatch = useDispatch();
+
+  const bookings = useSelector(selectAllBookings);
+  const contacts = useSelector(selectContacts);
+  const bookingsStatus = useSelector(selectBookingsStatus);
+  const contactsStatus = useSelector(selectContactsStatus);
+
+  useEffect(() => {
+    if (bookingsStatus === "idle") {
+      dispatch(fetchBookings());
+    }
+    if (contactsStatus === "idle") {
+      dispatch(fetchContacts());
+    }
+  }, [dispatch, bookingsStatus, contactsStatus]);
+
+  const isLoading = bookingsStatus === "loading" || contactsStatus === "loading";
+  const anyError =
+    bookingsStatus === "failed"
+      ? "Failed to load bookings"
+      : contactsStatus === "failed"
+      ? "Failed to load contacts"
+      : null;
 
   const dashboardItems = [
     {
       title: "Total Bookings",
-      value: 2,
+      value: bookings.length,
       icon: Home,
-      loading: false,
-      error: null,
+      loading: bookingsStatus === "loading",
+      error: bookingsStatus === "failed",
       menuKey: "bookings",
       iconColor: "bg-blue-500",
-      growth: "+12%",
     },
     {
-      title: "Total contacts",
-      value: 22,
+      title: "Total Contacts",
+      value: contacts.length,
       icon: Phone,
-      loading: false,
-      error: null,
+      loading: contactsStatus === "loading",
+      error: contactsStatus === "failed",
       menuKey: "contacts",
       iconColor: "bg-green-500",
-      growth: "+5%",
-    }
+    },
   ];
-
-  // const quickActions = [
-  //   {
-  //     title: "Add Customer",
-  //     description: "Onboard new customers and manage their details efficiently",
-  //     icon: UserPlus,
-  //     iconColor: "bg-blue-500",
-  //     action: () => onMenuChange("customers"),
-  //   },
-  //   {
-  //     title: "Add Room",
-  //     description: "Create new room entries and manage room allocations",
-  //     icon: Plus,
-  //     iconColor: "bg-green-500",
-  //     action: () => onMenuChange("rooms"),
-  //   },
-  //   {
-  //     title: "Menu Planning",
-  //     description: "Update and manage daily food menu for residents",
-  //     icon: ChefHat,
-  //     iconColor: "bg-slate-600",
-  //     action: () => onMenuChange("menu"),
-  //   },
-  //   {
-  //     title: "Payment Records",
-  //     description: "View and manage all payment transactions and history",
-  //     icon: FileText,
-  //     iconColor: "bg-red-500",
-  //     action: () => onMenuChange("payments"),
-  //   },
-  // ];
 
   if (anyError) {
     return (
@@ -120,8 +110,6 @@ const DashboardContents = ({ onMenuChange }) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {dashboardItems.map((item) => {
               const IconComponent = item.icon;
-              const isPositiveGrowth = item.growth.startsWith("+");
-              const isNegativeGrowth = item.growth.startsWith("-");
 
               return (
                 <Card
@@ -145,17 +133,11 @@ const DashboardContents = ({ onMenuChange }) => {
                           <div className={`p-3 rounded-xl ${item.iconColor}`}>
                             <IconComponent className="h-6 w-6 text-white" />
                           </div>
-                          <Badge
-                            variant={isPositiveGrowth ? "default" : isNegativeGrowth ? "destructive" : "secondary"}
-                            className={`text-xs font-medium ${
-                              isPositiveGrowth ? "bg-green-100 text-green-700 hover:bg-green-100" : isNegativeGrowth ? "bg-red-100 text-red-700 hover:bg-red-100" : ""
-                            }`}
-                          >
-                            {item.growth}
-                          </Badge>
                         </div>
                         <div>
-                          <div className="text-3xl font-bold text-gray-900 mb-1">{item.isCurrency ? `₹${item.value}L` : item.value.toLocaleString()}</div>
+                          <div className="text-3xl font-bold text-gray-900 mb-1">
+                            {item.value.toLocaleString()}
+                          </div>
                           <p className="text-sm text-gray-600">{item.title}</p>
                         </div>
                       </div>
@@ -165,12 +147,6 @@ const DashboardContents = ({ onMenuChange }) => {
               );
             })}
           </div>
-          {/* <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-900">Quick Actions</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            </div>
-          </div> */}
         </div>
       )}
     </div>

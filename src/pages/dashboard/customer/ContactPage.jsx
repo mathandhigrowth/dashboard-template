@@ -1,16 +1,35 @@
-import ContactTable from "./ContactTable";
-import React, { useState, useEffect, useMemo } from "react";
-import { Card, Input, Row, Col, Typography, message } from "antd";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  Card,
+  Input,
+  Row,
+  Col,
+  Typography,
+  message,
+} from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchContacts,
+  removeContact,
+  selectContacts,
+  selectContactsStatus,
+} from "../../../redux/contact/contactSlice";
+
 import DeleteConfirmModal from "../../../components/Modals/DeleteConfirmModal";
 import ViewMessageModal from "./components/ViewMessageModal";
-import demoContacts from "./demoContacts.json";
+import ContactTable from "./ContactTable";
 
 const { Title } = Typography;
 
 const ContactPage = () => {
-  const [contacts, setContacts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  const contacts = useSelector(selectContacts);
+
+  const status = useSelector(selectContactsStatus);
+
   const [searchText, setSearchText] = useState("");
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -21,24 +40,12 @@ const ContactPage = () => {
     total: 0,
   });
 
-  // Load demo data on mount
   useEffect(() => {
-    setLoading(true);
-    try {
-      setContacts(demoContacts.contacts);
-      setPagination((prev) => ({
-        ...prev,
-        total: demoContacts.contacts.length,
-      }));
-    } catch (error) {
-      console.error("Error loading demo contacts:", error);
-      message.error("Failed to load demo contacts");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
-  // Filter data based on search
+  const loading = status === "loading";
+
   const filteredData = useMemo(() => {
     if (!searchText) return contacts;
     const searchLower = searchText.toLowerCase();
@@ -47,20 +54,16 @@ const ContactPage = () => {
         contact.name?.toLowerCase().includes(searchLower) ||
         contact.email?.toLowerCase().includes(searchLower) ||
         contact.phone?.includes(searchText) ||
-        contact.subject?.toLowerCase().includes(searchLower) ||
-        contact.message?.toLowerCase().includes(searchLower) ||
-        contact.status?.toLowerCase().includes(searchLower)
+        contact.message?.toLowerCase().includes(searchLower)
       );
     });
   }, [searchText, contacts]);
 
-  // Paginated data
   const paginatedData = useMemo(() => {
     const start = (pagination.current - 1) * pagination.pageSize;
     return filteredData.slice(start, start + pagination.pageSize);
   }, [filteredData, pagination.current, pagination.pageSize]);
 
-  // Update pagination total when filteredData changes
   useEffect(() => {
     setPagination((prev) => ({
       ...prev,
@@ -84,29 +87,15 @@ const ContactPage = () => {
     setSelectedContact(null);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (!selectedContact) return;
 
     try {
-      const updatedContacts = contacts.filter(
-        (contact) => contact._id !== selectedContact._id
-      );
-      setContacts(updatedContacts);
-      message.success("Contact message deleted successfully");
-
-      // Adjust page if last item on the last page
-      if (
-        paginatedData.length === 1 &&
-        pagination.current > 1
-      ) {
-        setPagination((prev) => ({
-          ...prev,
-          current: Math.max(1, prev.current - 1),
-        }));
-      }
-    } catch (error) {
-      console.error("Error deleting contact:", error);
-      message.error("Failed to delete contact message");
+      await dispatch(removeContact(selectedContact)).unwrap();
+      message.success("Contact deleted successfully");
+    } catch (err) {
+      console.error("Error deleting contact:", err);
+      message.error("Failed to delete contact");
     } finally {
       setIsDeleteModalVisible(false);
       setSelectedContact(null);

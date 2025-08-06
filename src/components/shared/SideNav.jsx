@@ -3,11 +3,12 @@ import { Button, Layout, Menu } from "antd";
 import { MdDashboard, MdCategory, MdLogout, MdOutlineInventory2, MdOutlineLocalShipping, MdAlternateEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/auth/authSlice";
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-import { BarChart3, Users, AlertTriangle, Building, Utensils, User, CreditCard, Settings, BuildingIcon } from "lucide-react";
+import { BarChart3, Users, AlertTriangle, Building, Utensils, User, CreditCard, Settings, BuildingIcon, Bike } from "lucide-react";
 import { FiSettings } from "react-icons/fi";
 import { Calendar } from "lucide-react";
 const MENU_ITEMS = [
@@ -24,12 +25,11 @@ const MENU_ITEMS = [
     type: "item",
   },
   {
-    key: "Contact",
+    key: "contacts",
     icon: <Users size={18} />,
     label: "Contact Messages",
     type: "item",
   },
-  
 ];
 
 const DEFAULT_SIDEBAR_WIDTH = 250;
@@ -38,6 +38,18 @@ const MOBILE_COLLAPSED_WIDTH = 60;
 export default function Sidebar({ onSelectMenu, selectedKey }) {
   const [collapsed, setCollapsed] = useState(false);
   const [openKeys, setOpenKeys] = useState([]);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser()).unwrap();
+      navigate("/");
+    } catch (error) {
+      toast.error("Logout failed.");
+    }
+  };
 
   const toggleCollapsed = () => setCollapsed(!collapsed);
 
@@ -90,10 +102,10 @@ export default function Sidebar({ onSelectMenu, selectedKey }) {
       }}
     >
       <div className="text-center py-2 border-b border-gray-400 bg-white flex items-center justify-center flex-row gap-3">
-        <BuildingIcon size={35} className={` p-1 mt-2 rounded bg-blue-500 fill-white stroke-1 stroke-blue-500 mb-1`} />
+        <Bike size={35} className={` p-1 mt-2 rounded bg-blue-500 text-white mb-1`} />
         {!collapsed && (
           <div className="text-gray-900 text-start m-0">
-            <h2 className="text-md md:text-xl font-semibold"> ADMIN</h2>
+            <h2 className="text-md md:text-xl font-semibold">RUTS N RIDES</h2>
             <p className="text-xs">Admin Dashboard</p>
           </div>
         )}
@@ -116,7 +128,7 @@ export default function Sidebar({ onSelectMenu, selectedKey }) {
       </Menu>
 
       <div className="flex justify-center items-center w-full">
-        <Button style={{ backgroundColor: "#19314B", borderColor: "#19314B" }} type="primary" icon={<MdLogout size={15} />} className="w-full">
+        <Button onClick={handleLogout} style={{ backgroundColor: "#19314B", borderColor: "#19314B" }} type="primary" icon={<MdLogout size={15} />} className="w-full">
           {collapsed ? "" : "Logout"}
         </Button>
       </div>

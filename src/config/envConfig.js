@@ -1,5 +1,5 @@
 export const SITE_NAME =
-  import.meta.env.VITE_PUBLIC_SITE_NAME || 'Admin Panel';
+  import.meta.env.VITE_PUBLIC_SITE_NAME || 'RUTS N RIDES | Admin Panel';
 
 export const API_URL = import.meta.env.VITE_PUBLIC_API_URL;
 

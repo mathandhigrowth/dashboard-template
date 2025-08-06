@@ -15,7 +15,7 @@ const Content = ({ selectedMenu, onMenuChange }) => {
     case "bookings":
       content = <BookingPage onMenuChange={onMenuChange} />;
       break;
-    case "Contact":
+    case "contacts":
       content = <ContactPage onMenuChange={onMenuChange} />;
       break;
    

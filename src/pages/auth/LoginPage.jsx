@@ -1,22 +1,61 @@
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, selectAuthStatus, selectAuthError, selectIsAuthenticated } from "../../redux/auth/authSlice";
+import { Button, Form, Input, Alert, Spin } from "antd";
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const authStatus = useSelector(selectAuthStatus);
+  const authError = useSelector(selectAuthError);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+
+  const [form] = Form.useForm();
+  const isLoading = authStatus === "loading";
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
+
+  const onFinish = (values) => {
+    dispatch(loginUser(values));
+  };
+
   return (
-    <div className="p-6 max-w-sm mx-auto mt-20 border rounded-lg shadow-lg bg-white">
-      <h1 className="text-xl font-semibold mb-4 text-center">Admin Login</h1>
-      <form className="space-y-4">
-        <input name="email" type="email" placeholder="Email" required className="w-full p-2 border rounded" />
-        <input name="password" type="password" placeholder="Password" required className="w-full p-2 border rounded" />
-        <button type="submit" className="bg-blue-600 text-white w-full py-2 rounded hover:bg-blue-700 transition">
-          Login{" "}
-        </button>
-        <button type="button" className="bg-red-500 text-white w-full py-2 rounded hover:bg-red-600 transition">
-          Login with Google
-        </button>
-      </form>
-      <button className="text-center w-full block mt-2 font-bold">
-        <Link to="/dashboard">Go to dashboard</Link>
-      </button>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="p-8 max-w-md w-full mx-auto border rounded-lg shadow-xl bg-white">
+        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">RUTS N RIDES - Admin Login</h1>
+        <Form form={form} name="login" onFinish={onFinish} layout="vertical" requiredMark="optional">
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              { required: true, message: "Please input your Email!" },
+              { type: "email", message: "The input is not valid E-mail!" },
+            ]}
+          >
+            <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
+          </Form.Item>
+
+          <Form.Item name="password" label="Password" rules={[{ required: true, message: "Please input your Password!" }]}>
+            <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? <Spin size="small" /> : "Log in"}
+            </Button>
+          </Form.Item>
+        </Form>
+
+        {authError && <Alert message={typeof authError === "string" ? authError : "Login failed"} type="error" showIcon className="mb-4" />}
+      </div>
     </div>
   );
 };
