@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import authReducer from "./auth/authSlice";
 import contactReducer from "./contact/contactSlice";
 import bookingReducer from "./booking/bookingSlice";
+import launchReducer from "./launch/launchSlice";
 
 const persistConfig = {
   key: "root",
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   contacts: contactReducer,
   bookings: bookingReducer,
+  launch: launchReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

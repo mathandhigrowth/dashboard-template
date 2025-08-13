@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, selectAuthStatus, selectAuthError, selectIsAuthenticated } from "../../redux/auth/authSlice";
-import { Button, Form, Input, Alert, Spin } from "antd";
+import { Button, Form, Input, Spin } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import toast from "react-hot-toast";
 
@@ -18,6 +18,19 @@ const LoginPage = () => {
   const isLoading = authStatus === "loading";
 
   useEffect(() => {
+    const pingServer = async () => {
+      try {
+        const res = await fetch("/api/ping");
+        const text = await res.text();
+        console.log("Ping response:", text);
+      } catch (error) {
+        console.error("Ping failed:", error);
+      }
+    };
+    pingServer();
+  }, []);
+
+  useEffect(() => {
     if (isAuthenticated) {
       navigate("/dashboard");
     }
@@ -30,8 +43,16 @@ const LoginPage = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="p-8 max-w-md w-full mx-auto border rounded-lg shadow-xl bg-white">
-        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">RUTS N RIDES - Admin Login</h1>
-        <Form form={form} name="login" onFinish={onFinish} layout="vertical" requiredMark="optional">
+        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
+          RUTS N RIDES - Admin Login
+        </h1>
+        <Form
+          form={form}
+          name="login"
+          onFinish={onFinish}
+          layout="vertical"
+          requiredMark="optional"
+        >
           <Form.Item
             name="email"
             label="Email"
@@ -40,21 +61,36 @@ const LoginPage = () => {
               { type: "email", message: "The input is not valid E-mail!" },
             ]}
           >
-            <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
+            <Input
+              prefix={<MailOutlined className="site-form-item-icon" />}
+              placeholder="Email"
+            />
           </Form.Item>
 
-          <Form.Item name="password" label="Password" rules={[{ required: true, message: "Please input your Password!" }]}>
-            <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
+          <Form.Item
+            name="password"
+            label="Password"
+            rules={[
+              { required: true, message: "Please input your Password!" },
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              placeholder="Password"
+            />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="w-full" disabled={isLoading}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="w-full"
+              disabled={isLoading}
+            >
               {isLoading ? <Spin size="small" /> : "Log in"}
             </Button>
           </Form.Item>
         </Form>
-
-        {authError && <Alert message={typeof authError === "string" ? authError : "Login failed"} type="error" showIcon className="mb-4" />}
       </div>
     </div>
   );

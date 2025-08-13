@@ -2,43 +2,29 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader2, AlertCircle, Home, Phone } from "lucide-react";
 
-import {
-  fetchBookings,
-  selectAllBookings,
-  selectBookingsStatus,
-} from "../../redux/booking/bookingSlice";
+import { fetchBookings, selectAllBookings, selectBookingsStatus } from "../../redux/booking/bookingSlice";
 
-import {
-  fetchContacts,
-  selectContacts,
-  selectContactsStatus,
-} from "../../redux/contact/contactSlice";
+import { fetchContacts, selectContacts, selectContactsStatus } from "../../redux/contact/contactSlice";
+import { Link } from "react-router-dom";
+import { Button } from "antd";
 
-const Card = React.forwardRef(({ className, ...props }, ref) => (
-  <div ref={ref} className={`rounded-lg border bg-white text-card-foreground shadow-sm ${className || ""}`} {...props} />
-));
+const Card = React.forwardRef(({ className, ...props }, ref) => <div ref={ref} className={`rounded-lg border bg-white text-card-foreground shadow-sm ${className || ""}`} {...props} />);
 Card.displayName = "Card";
 
-const CardContent = React.forwardRef(({ className, ...props }, ref) => (
-  <div ref={ref} className={`p-6 ${className || ""}`} {...props} />
-));
+const CardContent = React.forwardRef(({ className, ...props }, ref) => <div ref={ref} className={`p-6 ${className || ""}`} {...props} />);
 CardContent.displayName = "CardContent";
 
 const Alert = React.forwardRef(({ className, variant, ...props }, ref) => (
   <div
     ref={ref}
     role="alert"
-    className={`relative w-full rounded-lg border p-4 ${
-      variant === "destructive" ? "border-destructive/50 text-destructive" : "border-border"
-    } ${className || ""}`}
+    className={`relative w-full rounded-lg border p-4 ${variant === "destructive" ? "border-destructive/50 text-destructive" : "border-border"} ${className || ""}`}
     {...props}
   />
 ));
 Alert.displayName = "Alert";
 
-const AlertDescription = React.forwardRef(({ className, ...props }, ref) => (
-  <div ref={ref} className={`text-sm [&_p]:leading-relaxed ${className || ""}`} {...props} />
-));
+const AlertDescription = React.forwardRef(({ className, ...props }, ref) => <div ref={ref} className={`text-sm [&_p]:leading-relaxed ${className || ""}`} {...props} />);
 AlertDescription.displayName = "AlertDescription";
 
 const DashboardContents = ({ onMenuChange }) => {
@@ -59,12 +45,7 @@ const DashboardContents = ({ onMenuChange }) => {
   }, [dispatch, bookingsStatus, contactsStatus]);
 
   const isLoading = bookingsStatus === "loading" || contactsStatus === "loading";
-  const anyError =
-    bookingsStatus === "failed"
-      ? "Failed to load bookings"
-      : contactsStatus === "failed"
-      ? "Failed to load contacts"
-      : null;
+  const anyError = bookingsStatus === "failed" ? "Failed to load bookings" : contactsStatus === "failed" ? "Failed to load contacts" : null;
 
   const dashboardItems = [
     {
@@ -135,9 +116,7 @@ const DashboardContents = ({ onMenuChange }) => {
                           </div>
                         </div>
                         <div>
-                          <div className="text-3xl font-bold text-gray-900 mb-1">
-                            {item.value.toLocaleString()}
-                          </div>
+                          <div className="text-3xl font-bold text-gray-900 mb-1">{item.value.toLocaleString()}</div>
                           <p className="text-sm text-gray-600">{item.title}</p>
                         </div>
                       </div>
@@ -147,6 +126,9 @@ const DashboardContents = ({ onMenuChange }) => {
               );
             })}
           </div>
+          <Link to="/launch" className='w-full flex justify-center items-center'>
+            <Button className="w-full px-3 mx-auto md:w-1/2 bg-green-600! text-white! font-bold!">Launch Ruts N Rides</Button>
+          </Link>
         </div>
       )}
     </div>

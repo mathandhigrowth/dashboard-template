@@ -1,7 +1,7 @@
 export const SITE_NAME =
   import.meta.env.VITE_PUBLIC_SITE_NAME || 'RUTS N RIDES | Admin Panel';
 
-export const API_URL = import.meta.env.VITE_PUBLIC_API_URL;
+export const API_URL = import.meta.env.VITE_PUBLIC_API_URL || "https://api.rutsnrides.com";
 
 export function assertEnv() {
   if (!import.meta.env.VITE_PUBLIC_SITE_NAME) {

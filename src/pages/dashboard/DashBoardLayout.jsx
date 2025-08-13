@@ -19,11 +19,9 @@ const DashBoardLayout = () => {
     <Layout className="h-screen rounded-lg bg-[#F5F5F5] overflow-hidden shadow-lg p-1">
       <Sidebar onSelectMenu={handleMenuClick} selectedKey={selectedMenu} />
       <Layout className="md:m-2 m-1 rounded-lg overflow-hidden">
-        <Header style={{ background: "#FFFFFF" }} className=" flex justify-between items-center px-4 py-4 rounded-lg shadow-md mb-2 min-h-[30px] md:min-h-[100px]">
+        <Header style={{ background: "#FFFFFF" }} className=" flex justify-between items-center px-4 py-0 rounded-lg shadow-md mb-2 min-h-[30px] md:min-h-[100px]">
           <div className="flex flex-col">
-            <h1 className="text-black text-xl md:text-3xl font-bold">Dashboard Overview</h1>
-            <p className="text-gray-700 text-sm mt-2"> Welcome back{user?.fullName ? `, ${user.fullName}` : "Anonymous"}!</p>
-            
+            <h1 className="text-black text- md:text-3xl font-bold">Ruts N Rides - Dashboard</h1>
           </div>
         </Header>
         <AntdContent className="rounded-b-lg overflow-hidden shadow-lg bg-white">
